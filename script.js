@@ -9,7 +9,7 @@ function startStop() {
         running = false;
         document.getElementById("startStop").textContent = "Start";
     } else {
-        startTime = Date.now() - (lapCounter > 1 ? lapCounter * 1000 : 0);
+        startTime = Date.now();
         stopwatch = setInterval(updateDisplay, 10);
         running = true;
         document.getElementById("startStop").textContent = "Stop";
@@ -41,10 +41,10 @@ function updateDisplay() {
     document.getElementById("display").textContent = formatTime(currentTime);
 }
 function formatTime(time) {
-    const date = new Date(time);
-    let minutes = date.getMinutes().toString().padStart(2, "0");
-    let seconds = date.getSeconds().toString().padStart(2, "0");
-    let milliseconds = Math.floor(date.getMilliseconds() / 10).toString().padStart(2, "0");
+
+    let minutes = Math.floor(time / 60000).toString().padStart(2, "0");
+    let seconds = Math.floor((time % 60000) / 1000).toString().padStart(2, "0");
+    let milliseconds = Math.floor((time % 1000) / 10).toString().padStart(2, "0");
     return `${minutes}:${seconds}:${milliseconds}`;
 }
 
